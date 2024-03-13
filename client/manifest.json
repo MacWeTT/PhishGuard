@@ -1,0 +1,13 @@
+{
+  "name": "PhishGuard",
+  "version": "0.0.1",
+  "manifest_version": 3,
+  "action": {
+    "default_icon": {
+      "128": "assets/logo.png"
+    },
+    "default_title": "PhishGuard",
+    "default_popup": "popup.html"
+  },
+  "permissions": ["activeTab"]
+}
