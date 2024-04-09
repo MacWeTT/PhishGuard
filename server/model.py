@@ -1,0 +1,2 @@
+def checkForPhishing() -> None:
+    pass

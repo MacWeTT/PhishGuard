@@ -1,12 +1,15 @@
-let API_URL = "http://localhost:8000/";
-
-setTimeout(() => {
+document.addEventListener("DOMContentLoaded", function () {
+    const API_URL = "http://localhost:8000/";
+    const online_button = document.querySelector('.online-status');
+    const extension_status = document.querySelector('.extension-status');
+    console.log(online_button, extension_status)
     fetch(API_URL)
         .then(res => res.json())
         .then((data) => {
-            const para = document.getElementById("para");
-            para.innerHTML = data.message;
+            online_button.style.backgroundColor = 'green';
+            extension_status.innerHTML = data.message;
         })
-        .catch(err => console.error(err))
-}, 2000);
-
+        .catch((err) => {
+            extension_status.innerHTML = err;
+        });
+});

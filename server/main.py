@@ -1,5 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
+from model import checkForPhishing
 
 app = FastAPI()
 app.add_middleware(
@@ -14,3 +15,13 @@ app.add_middleware(
 @app.get("/")
 async def root():
     return {"message": "Connection to server successful."}
+
+
+@app.post("/check-url")
+async def check_url(params: dict, background_task: BackgroundTasks):
+    background_task.add_task(checkForPhishing(params.url))
+
+
+@app.get("/prediction-result")
+async def get_prediction_results(request_id: str):
+    return {"prediction": "Website is legitimate", "accuracy": 0.85}

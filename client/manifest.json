@@ -1,6 +1,7 @@
 {
   "name": "PhishGuard",
   "version": "0.0.1",
+  "description": "PhishGuard is a phishing website detection extension.",
   "manifest_version": 3,
   "action": {
     "default_icon": {

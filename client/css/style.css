@@ -3,3 +3,55 @@
   padding: 0px;
   box-sizing: border-box;
 }
+
+:root {
+  --primary-color: #496989;
+  --secondary-color: #58a399;
+  --tertiary-color: #a8cd9f;
+  --quaternary-color: #e2f4c5;
+}
+
+.mainbox {
+  background-color: var(--quaternary-color);
+  height: 500px;
+  width: 350px;
+  position: relative;
+}
+
+.online-status {
+  height: 12px;
+  width: 12px;
+  background-color: red;
+  position: absolute;
+  top: 4%;
+  right: 4%;
+  border-radius: 50%;
+}
+
+h1 {
+  color: var(--primary-color);
+  /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); */
+}
+
+.main-heading {
+  text-align: center;
+  font-size: 32px;
+  padding: 10px 0px;
+}
+
+.verdict {
+  margin: 10px;
+  border-radius: 5px;
+  border: 2px solid var(--secondary-color);
+  padding: 10px;
+}
+
+.extension-status {
+  position: absolute;
+  bottom: 0%;
+  width: 350px;
+  padding: 10px 5px;
+  border-top: 2px solid var(--secondary-color);
+  font-size: 14px;
+  text-align: center;
+}
