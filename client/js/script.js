@@ -10,6 +10,6 @@ document.addEventListener("DOMContentLoaded", function () {
             extension_status.innerHTML = data.message;
         })
         .catch((err) => {
-            extension_status.innerHTML = err;
+            extension_status.innerHTML = 'Cannot connect to server.';
         });
 });
