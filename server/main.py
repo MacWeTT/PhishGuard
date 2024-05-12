@@ -18,8 +18,9 @@ async def root():
 
 
 @app.post("/check-url")
-async def check_url(params: dict, background_task: BackgroundTasks):
-    background_task.add_task(checkForPhishing(params.url))
+async def check_url(params: dict):
+    return {"params": params}
+    # background_task.add_task(checkForPhishing(params.url))
 
 
 @app.get("/prediction-result")
