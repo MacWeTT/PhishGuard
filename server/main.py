@@ -1,4 +1,4 @@
-from fastapi import FastAPI, BackgroundTasks
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from model import checkForPhishing
 
@@ -19,8 +19,20 @@ async def root():
 
 @app.post("/check-url")
 async def check_url(params: dict):
-    return {"params": params}
-    # background_task.add_task(checkForPhishing(params.url))
+    # res = checkForPhishing(params)
+    res = True
+    if res:
+        response = {
+            "code": 1,
+            "message": "Site is suspicious. Please proceed with caution.",
+        }
+    else:
+        response = {
+            "code": 0,
+            "message": "Site is not suspicious. You can browse safely.",
+        }
+
+    return response
 
 
 @app.get("/prediction-result")

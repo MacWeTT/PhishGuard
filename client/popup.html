@@ -1,28 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
+<div id="popup-container" style="position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        color: black;
+        padding: 20px;
+        border: 2px solid black;
+        z-index: 100;">
+    <h1>This website is flagged as suspicious.</h1>
+    <p>Do you want to proceed?</p>
+    <button id="proceed-btn">Proceed</button>
+    <button id="cancel-btn">Cancel</button>
+</div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <title>PhishGuard</title>
-</head>
-
-<body>
-    <main class="mainbox">
-        <h1 class="main-heading">PhishGuard</h1>
-        <div class="online-status"></div>
-
-        <div class="verdict">
-            <h2>Verdict</h3>
-                <h3>Status: Legitimate</h3>
-                <h3>Accuracy: 85%</h3>
-        </div>
-        <div class="extension-status">
-            Connecting to server...
-        </div>
-    </main>
-    <script src="js/script.js"></script>
-</body>
-
-</html>
+<style>
+    .popup-container {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        color: black;
+        padding: 20px;
+        border: 2px solid black;
+        z-index: 100;
+    }
+</style>

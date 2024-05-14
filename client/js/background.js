@@ -1,17 +1,15 @@
 // background.js
 
-// Listen for messages from content script
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-    console.log('Message received:', message);
-    sendUrlToBackend(message.url);
-    console.log("Request sent");
+    if (message.action === 'sendUrl') {
+        sendUrlToBackend(message.url);
+    }
 });
 
-// Function to send URL to backend server
 function sendUrlToBackend(url) {
-    // Use AJAX or Fetch API to send the URL to your backend server
-    // Example using Fetch API
-    fetch(`http://localhost:8000/check-url`, {
+    const API_URL = "http://localhost:8000/check-url/";
+
+    fetch(API_URL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -25,7 +23,16 @@ function sendUrlToBackend(url) {
             return response.json();
         })
         .then(data => {
-            console.log('Response from backend:', data);
+            console.log('Result from backend:', data);
+            if (data.code === 1) { // Check if code is equal to 1
+                // Send a message to the content script to display the popup
+                chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                    chrome.tabs.sendMessage(tabs[0].id, { action: 'displayPopup' });
+                });
+            } else {
+                // Store the result if legitimate or handle other cases
+                console.log('Backend response is not suspicious:', data);
+            }
         })
         .catch(error => {
             console.error('Error sending URL to backend:', error);
