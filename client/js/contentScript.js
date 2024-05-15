@@ -1,59 +1,133 @@
-// contentScript.js
-
 var currentUrl = window.location.href;
+
 chrome.runtime.sendMessage({ action: 'sendUrl', url: currentUrl });
+
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     switch (message.action) {
         case 'displayPopup':
-            displayPopup();
-            break;
-        case 'proceed':
-            console.log("proceed to website");
-            break;
-        case 'cancel':
-            console.log("quit website");
+            createPopup();
             break;
         default:
             break;
     }
 });
 
-function displayPopup() {
-    const popupHtml = `
-       <div id="popup-container" style="position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: white;
+const popupStyles =
+    `:root {
+        --primary-color: #496989;
+        --secondary-color: #58a399;
+        --tertiary-color: #a8cd9f;
+        --quaternary-color: #e2f4c5;
+    }
+
+    .popup-parent {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+        overflow: hidden;
+        z-index: 99999;
+    }
+
+    .popup-parent {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(4px);
+    }
+
+    .popup-container {
+        background-color: var(--quaternary-color);
         color: black;
         padding: 20px;
-        border: 2px solid black;
-        z-index: 100;">
-    <h1>This website is flagged as suspicious.</h1>
-    <p>Do you want to proceed?</p>
-    <button id="proceed-btn">Proceed</button>
-    <button id="cancel-btn">Cancel</button>
-</div>
-    `;
+        border: 2px solid var(--secondary-color);
+        border-radius: 10px;
+    }
 
-    document.body.insertAdjacentHTML('afterbegin', popupHtml);
+    .popup-text {
+        font-size: 20px;
+        text-align: center;
+    }
 
-    const proceedBtn = document.getElementById('proceed-btn');
-    const cancelBtn = document.getElementById('cancel-btn');
+    .popup-buttons {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+    }
 
+
+    #proceed-btn,
+    #cancel-btn {
+        padding: 5px 10px;
+        margin: 10px;
+        border: 2px solid var(--secondary-color);
+        color: var(--primary-color);
+        background-color: var(--quaternary-color);
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+    .popup{
+        overflow: hidden;
+    }
+`;
+
+function createPopup() {
+    const popupParent = document.createElement('div');
+    popupParent.classList.add('popup-parent');
+
+    const popupContainer = document.createElement('div');
+    popupContainer.classList.add('popup-container');
+
+    const heading = document.createElement('h1');
+    heading.style.color = 'var(--primary-color)';
+    heading.textContent = 'This website is flagged as suspicious.';
+
+    const paragraph = document.createElement('p');
+    paragraph.classList.add('popup-text');
+    paragraph.textContent = 'Do you want to proceed?';
+
+    const buttonsDiv = document.createElement('div');
+    buttonsDiv.classList.add('popup-buttons');
+
+    const proceedBtn = document.createElement('button');
+    proceedBtn.id = 'proceed-btn';
+    proceedBtn.textContent = 'I know what I\'m doing';
+
+    const cancelBtn = document.createElement('button');
+    cancelBtn.id = 'cancel-btn';
+    cancelBtn.textContent = 'Take me to safety';
+
+    // Append elements
+    buttonsDiv.appendChild(proceedBtn);
+    buttonsDiv.appendChild(cancelBtn);
+    popupContainer.appendChild(heading);
+    popupContainer.appendChild(paragraph);
+    popupContainer.appendChild(buttonsDiv);
+    popupParent.appendChild(popupContainer);
+
+    // Append the popup to the body
+    document.body.appendChild(popupParent);
+
+    const styleElement = document.createElement('style');
+    styleElement.textContent = popupStyles;
+    document.head.appendChild(styleElement);
+    document.body.classList.toggle('popup');
+
+    // Event listeners for buttons
     proceedBtn.addEventListener('click', function () {
-        // Send a message to the background script indicating that the user wants to proceed
-        chrome.runtime.sendMessage({ action: 'proceed' });
-        closePopup(); // Close the popup
+        popupParent.remove();
+        document.body.classList.toggle('popup');
     });
 
     cancelBtn.addEventListener('click', function () {
-        // Send a message to the background script indicating that the user wants to cancel
-        chrome.runtime.sendMessage({ action: 'cancel' });
-        closePopup(); // Close the popup
+        chrome.runtime.sendMessage({ action: 'closeTab' });
     });
-
-    function closePopup() {
-        document.getElementById('popup-container').remove();
-    }
 }

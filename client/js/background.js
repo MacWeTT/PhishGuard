@@ -1,8 +1,17 @@
 // background.js
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-    if (message.action === 'sendUrl') {
-        sendUrlToBackend(message.url);
+    switch (message.action) {
+        case 'sendUrl':
+            sendUrlToBackend(message.url);
+            break;
+        case 'closeTab':
+            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                let tabId = tabs[0].id;
+                chrome.tabs.remove(tabId);
+            });
+        default:
+            break;
     }
 });
 
