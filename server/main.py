@@ -18,21 +18,10 @@ async def root():
 
 
 @app.post("/check-url")
-async def check_url(params: dict):
-    # res = checkForPhishing(params)
-    res = True
-    if res:
-        response = {
-            "code": 1,
-            "message": "Site is suspicious. Please proceed with caution.",
-        }
-    else:
-        response = {
-            "code": 0,
-            "message": "Site is not suspicious. You can browse safely.",
-        }
+async def check_url(url: str):
+    res = checkForPhishing(url)
 
-    return response
+    return res
 
 
 @app.get("/prediction-result")
