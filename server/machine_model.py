@@ -177,6 +177,6 @@ def checkForPhishing(url: str) -> dict:
     return {
         "code": code,
         "verdict": verdict,
-        "Phishing": phishing,
-        "Legitimate": legitimate,
+        "phishing": phishing,
+        "legitimate": legitimate,
     }

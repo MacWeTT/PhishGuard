@@ -14,7 +14,7 @@ class Url(Base):
         return f"<User {self.url}>"
 
 
-def UrlResponseDTO(BaseModel):
+class UrlResponseDTO(BaseModel):
     address: str
     code: int
     verdict: str

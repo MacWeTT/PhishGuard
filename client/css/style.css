@@ -2,6 +2,7 @@
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
 :root {
@@ -9,6 +10,8 @@
   --secondary-color: #58a399;
   --tertiary-color: #a8cd9f;
   --quaternary-color: #e2f4c5;
+  --success-color: #4bb543;
+  --danger-color: #7a0012;
 }
 
 .mainbox {
@@ -39,11 +42,45 @@ h1 {
   padding: 10px 0px;
 }
 
+.verdict-outer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
 .verdict {
-  margin: 10px;
-  border-radius: 5px;
-  border: 2px solid var(--secondary-color);
-  padding: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--primary-color);
+  height: 200px;
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.verdict-ring {
+  border-radius: 50%;
+  border: 5px solid var(--danger-color);
+  height: 190px;
+  width: 190px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.verdict-content,
+.content-2 {
+  margin: 30px 20px 0px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.verdict-table {
+  width: 200px;
+}
+
+#verdict-message {
+  width: 200px;
+  text-align: justify;
 }
 
 .extension-status {
