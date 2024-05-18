@@ -1,9 +1,9 @@
 from fastapi.middleware.cors import CORSMiddleware
 from machine_model import checkForPhishing
-from fastapi import FastAPI, Body
+from fastapi import FastAPI
 
 app = FastAPI()
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_headers=["*"])
+app.add_middleware(CORSMiddleware)
 
 
 @app.get("/")

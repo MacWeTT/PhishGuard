@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "PhishGuard is a phishing website detection extension.",
   "manifest_version": 3,
-  "permissions": ["activeTab", "tabs"],
+  "permissions": ["activeTab", "tabs", "storage"],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],

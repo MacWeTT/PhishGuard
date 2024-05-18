@@ -6,6 +6,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     switch (message.action) {
         case 'displayPopup':
             createPopup();
+            updateExtension(message.data)
             break;
         default:
             break;
@@ -30,7 +31,7 @@ const popupStyles =
         overflow: hidden;
         z-index: 99999;
     }
-
+    
     .popup-parent {
         position: absolute;
         top: 0;
@@ -41,14 +42,16 @@ const popupStyles =
         justify-content: center;
         align-items: center;
         backdrop-filter: blur(4px);
+        z-index: 99999;
     }
-
+    
     .popup-container {
         background-color: var(--quaternary-color);
         color: black;
         padding: 20px;
         border: 2px solid var(--secondary-color);
         border-radius: 10px;
+        z-index: 99999;
     }
 
     .popup-text {
@@ -78,6 +81,25 @@ const popupStyles =
         overflow: hidden;
     }
 `;
+
+document.addEventListener('DOMContentLoaded', function (data) {
+    console.log(data);
+    const verdictRing = document.getElementById('verdict');
+    const verdictRate = document.getElementById('verdict-rate');
+    const verdictMessage = document.getElementById('verdict-message');
+    console.log(verdictRing)
+
+    verdictRate.textContent = `${data.phishing.toFixed(2)}%`;
+    document.getElementById('phishing-rate').textContent = `${data.phishing.toFixed(2)}%`;
+    document.getElementById('legitimate-rate').textContent = `${data.legitimate.toFixed(2)}%`;
+    verdictMessage.textContent = data.verdict;
+
+    if (data.code === 1) {
+        verdictRing.style.backgroundColor = 'var(--danger-color)';
+    } else {
+        verdictRing.style.backgroundColor = 'var(--success-color)';
+    }
+})
 
 function createPopup() {
     const popupParent = document.createElement('div');

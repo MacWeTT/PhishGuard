@@ -1,5 +1,4 @@
 // background.js
-
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     switch (message.action) {
         case 'sendUrl':
@@ -24,20 +23,23 @@ function sendUrlToBackend(url) {
         },
     })
         .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
             return response.json();
         })
         .then(data => {
-            console.log('Result from backend:', data);
-            chrome.storage.local.set({ 'website-details': data }, function () {
-                if (data.code === 1) {
-                    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-                        chrome.tabs.sendMessage(tabs[0].id, { action: 'displayPopup' });
-                    });
-                }
-            });
+            if (data.code === 1) {
+                // Send message to content script to display popup
+                chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                    chrome.tabs.sendMessage(tabs[0].id, { action: 'displayPopup', data: data });
+
+                });
+            } else {
+                console.log('No action required.');
+            }
         })
         .catch(error => {
             console.error('Error sending URL to backend:', error);
         });
 }
-
