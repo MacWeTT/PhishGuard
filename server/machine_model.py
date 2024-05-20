@@ -167,8 +167,13 @@ def checkForPhishing(url: str) -> dict:
         phishing = round(probabilities[0][1] * 100, 2)
         legitimate = round(probabilities[0][0] * 100, 2)
 
-        if phishing > legitimate:
-            verdict = "Website is predicted to be phishy. Please proceed with caution."
+        if phishing > 90:
+            verdict = "Website is predicted to be dangerous. Please beware!"
+            code = 2
+        elif phishing > 80:
+            verdict = (
+                "Website is predicted to be suspicious. Please proceed with caution."
+            )
             code = 1
         else:
             verdict = "Website is predicted to be safe. Safe surfing!"

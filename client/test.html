@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/pip.css">
+</head>
+
+<body>
+
+</body>
+<script>
+    function createPopup(code, data) {
+        const popupParent = document.createElement('div');
+        popupParent.classList.add('popup-parent');
+
+        const popupContainer = document.createElement('div');
+        popupContainer.classList.add('popup-container');
+        if (code == 1) {
+            popupContainer.classList.add('warning')
+        } else if (code == 2) {
+            popupContainer.classList.add('danger')
+        }
+
+        const heading = document.createElement('h1');
+        heading.style.color = 'var(--primary-color)';
+        heading.textContent = data.verdict;
+
+
+        const probabilities = document.createElement('div');
+        probabilities.classList.add('probabilities');
+
+        const legitimate = document.createElement('div');
+        legitimate.classList.add('probability-item');
+        legitimate.textContent = `Legitimate: ${data.legitimate}%`;
+
+        const phishing = document.createElement('div');
+        phishing.classList.add('probability-item');
+        phishing.textContent = `Phishing: ${data.phishing}%`;
+
+        probabilities.appendChild(legitimate);
+        probabilities.appendChild(phishing);
+
+        const paragraph = document.createElement('p');
+        paragraph.classList.add('popup-text');
+        paragraph.textContent = 'Do you want to proceed?';
+
+        const buttonsDiv = document.createElement('div');
+        buttonsDiv.classList.add('popup-buttons');
+
+        const proceedBtn = document.createElement('button');
+        proceedBtn.id = 'proceed-btn';
+        proceedBtn.textContent = 'I know what I\'m doing';
+
+        const cancelBtn = document.createElement('button');
+        cancelBtn.id = 'cancel-btn';
+        cancelBtn.textContent = 'Take me to safety';
+
+        // Append elements
+        buttonsDiv.appendChild(proceedBtn);
+        buttonsDiv.appendChild(cancelBtn);
+        popupContainer.appendChild(heading);
+        popupContainer.appendChild(probabilities);
+        popupContainer.appendChild(paragraph);
+        popupContainer.appendChild(buttonsDiv);
+        popupParent.appendChild(popupContainer);
+
+        // Append the popup to the body
+        document.body.appendChild(popupParent);
+
+        const styleElement = document.createElement('style');
+        styleElement.textContent = popupStyles;
+        document.head.appendChild(styleElement);
+        document.body.classList.toggle('popup');
+
+        // Event listeners for buttons
+        proceedBtn.addEventListener('click', function () {
+            popupParent.remove();
+            document.body.classList.toggle('popup');
+        });
+
+        cancelBtn.addEventListener('click', function () {
+            chrome.runtime.sendMessage({ action: 'closeTab' });
+        });
+    }
+    const data = {
+        code: 1,
+        legitimate: 36.83,
+        phishing: 63.78,
+        verdict: `website seems suspicious.`
+    }
+
+    createPopup(data.code, data)
+
+</script>
+
+</html>

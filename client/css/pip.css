@@ -1,0 +1,72 @@
+:root {
+  --primary-color: #496989;
+  --secondary-color: #58a399;
+  --tertiary-color: #a8cd9f;
+  --quaternary-color: #e2f4c5;
+  --success-color: #4bb543;
+  --danger-color: #7a0012;
+  --warning-color: #eed202;
+}
+
+.popup-parent {
+  position: fixed; /* Change from absolute to fixed to ensure the popup stays centered when scrolling */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(4px);
+  z-index: 99999;
+}
+
+.warning {
+  border: 5px solid var(--warning-color);
+}
+
+.danger {
+  border: 5px solid var(--danger-color);
+}
+
+.popup-container {
+  background-color: var(--quaternary-color);
+  color: black;
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 99999;
+  /* Remove transform translate, it's not necessary for centering */
+}
+
+.probabilities {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+.popup-text {
+  font-size: 20px;
+  text-align: center;
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#proceed-btn,
+#cancel-btn {
+  padding: 5px 10px;
+  margin: 10px;
+  border: 2px solid var(--secondary-color);
+  color: var(--primary-color);
+  background-color: var(--quaternary-color);
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.popup {
+  overflow: hidden;
+}

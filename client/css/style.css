@@ -59,7 +59,7 @@ h1 {
 }
 .verdict-ring {
   border-radius: 50%;
-  border: 5px solid var(--danger-color);
+  border: 5px solid var(--success-color);
   height: 190px;
   width: 190px;
   display: flex;

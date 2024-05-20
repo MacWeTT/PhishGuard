@@ -13,7 +13,6 @@ async def root():
 
 @app.post("/check-url")
 async def check_url(url: str):
-    print(url)
     try:
         return checkForPhishing(url)
     except Exception as e:
