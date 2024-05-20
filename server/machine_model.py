@@ -157,7 +157,18 @@ def extract_features(url):
     return features
 
 
-def checkForPhishing(url: str) -> dict:
+def checkForPhishing(url: str,flag: bool) -> dict:
+    if flag == True:
+        code = 1
+        verdict = "Website is predicted to be phishy. Please proceed with caution."
+        phishing = 100
+        legitimate = 0
+        return {
+            "code": code,
+            "verdict": verdict,
+            "phishing": phishing,
+            "legitimate": legitimate 
+        }
     with open("./model/XGBoostClassifier.pickle.dat", "rb") as model_file:
         model = pickle.load(model_file)
         features = extract_features(url)
